@@ -1,0 +1,26 @@
+﻿@page "/addcustomer"
+@using BlazingApp.Services
+@using BlazingApp.Models
+@inject CustomerService customerService
+
+<h3>AddCustomer</h3>
+
+<EditForm Model="@customer" OnValidSubmit="HandleSubmit">
+    <label for="NameInput">Name</label>
+    <InputText id="NameInput" @bind-Value="@customer.Name"></InputText>
+    <label for="AgeInput">Age</label>
+    <InputNumber id="AgeInput" @bind-Value="@customer.Age"></InputNumber>
+    <button type="submit" class="btn-primary">Create</button>
+</EditForm>
+
+
+@code {
+    Customer customer = new Customer();
+
+    public void HandleSubmit(EditContext editContext)
+    {
+        var newCustomer = (Customer)editContext.Model;
+        newCustomer.CreatedDate = DateTime.Now;
+        customerService.AddCustomer(newCustomer);
+    }
+}

@@ -1,0 +1,34 @@
+﻿@page "/colours"
+@using BlazingApp.Data
+@inject ColourService colourService
+
+<h3>Colours</h3>
+
+
+@if(TotalColoursInStock > 0)
+{
+    <h3>Total Colours in Stock: @TotalColoursInStock</h3>
+}
+else
+{
+    <h1>Panic! There's nothing left</h1>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@code {
+    private int TotalColoursInStock = 0;
+    protected override async Task OnInitializedAsync()
+    {
+        TotalColoursInStock = await colourService.GetNumberOfDifferentColoursInStock();
+    }
+}
